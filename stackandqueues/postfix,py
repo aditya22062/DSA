@@ -1,0 +1,57 @@
+def postfix(exp):
+    # write your code here
+    infix=[]
+    prefix=[]
+    operators=[]
+    val=[]
+    for i in exp:
+        if i=='(':
+            operators.append(i)
+        elif i ==')':
+            while operators[-1]!='(':
+                operator=operators.pop()
+                val2=val.pop()
+                val1=val.pop()
+                pvas=evaluation(val1,val2,operator)
+                val.append(pvas)
+            operators.pop()
+        elif i =='+' or i=='-' or i=='*' or i=='/':
+            
+            v2=val.pop()
+            v1=val.pop()
+            tvas=evaluation(v1,v2,i)
+            val.append(tvas)
+
+            iv2=infix.pop()
+            iv1=infix.pop()
+            ival="("+iv1+""+i+""+iv2+""+")"
+            infix.append(ival)
+
+            pv2=prefix.pop()
+            pv1=prefix.pop()
+            pval=i+pv1+pv2
+            prefix.append(pval)
+            
+        else:
+            infix.append(i)
+            prefix.append(i)
+            val.append(i)
+    print(val)
+    print(infix[-1])
+    print(prefix[-1])
+
+def evaluation(v1,v2,exp):
+    if exp=='+':
+        return int(v1)+int(v2)
+    elif exp=='-':
+        return int(v1)-int(v2)
+    elif exp=='*':
+        return int(v1)*int(v2)
+    elif exp=='/':
+        return int(v1)/int(v2)
+    
+
+
+exp = list(input())
+
+postfix(exp)
